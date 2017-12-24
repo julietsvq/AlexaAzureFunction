@@ -18,7 +18,7 @@ namespace SampleSkillFunction
             if (data.request.type == "IntentRequest")
             {
                 string intent = data.request.intent.name;
-                System.Random rnd = new System.Random();
+                System.Random rnd = new System.Random(System.Guid.NewGuid().GetHashCode());
                 int value = 0;
 
                 switch (intent)
@@ -58,14 +58,9 @@ namespace SampleSkillFunction
                 }
             }
 
-            else if (data) //data.request.type == "LaunchRequest" || "SessionEndedRequest"
+            else 
             {
-                message = "No intent was called";
-            }
-
-            else
-            {
-                message = "Something went wrong, no data received";
+                message = (data != null) ? "No intent was called" : "Something went wrong, no data received";
             }
 
             return SendAnswer(req, message);
