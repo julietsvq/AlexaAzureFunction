@@ -56,7 +56,6 @@ namespace SampleSkillFunction
                         message = "This intent exists in the Alexa Intent Schema, but has not been implemented in your Azure function";
                         break;
                 }
-                return SendAnswer(req, message);
             }
 
             else if (data) //data.request.type == "LaunchRequest" || "SessionEndedRequest"
