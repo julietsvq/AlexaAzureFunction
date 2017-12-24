@@ -5,3 +5,5 @@ Random to give me a number between {FirstNumber} and {SecondNumber}
 Random to give me a random number between {FirstNumber} and {SecondNumber}
 Random for a number between {FirstNumber} and {SecondNumber}
 Random for a random number between {FirstNumber} and {SecondNumber}
+FlipACoin to flip a coin
+RollADice to roll a dice

@@ -17,35 +17,44 @@ namespace SampleSkillFunction
             if (data.request.type == "IntentRequest")
             {
                 string intent = data.request.intent.name;
+                System.Random rnd = new System.Random();
+                string message;
+                int value = 0;
 
                 switch (intent)
                 {
                     case "Random":
-                        int min, max = 0;
-                        string message;
-                        System.Random rnd = new System.Random();
-                        int value = 0;
-
+                        int min, max = 0;                       
+                        
                         string value1 = data.request.intent.slots.FirstNumber.value;
                         string value2 = data.request.intent.slots.SecondNumber.value;
 
                         if (int.TryParse(value1, out min) && int.TryParse(value2, out max))
-                        {
-                            rnd = new System.Random();
+                        {                           
                             value = rnd.Next(min, max);
                             message = value.ToString();
                         }
                         else
                         {
-                            rnd = new System.Random();
                             value = rnd.Next(0, 10);
                             message = value.ToString();
                         }
 
                         return SendAnswer(req, message);
 
+                    case "FlipACoin":
+                        value = rnd.Next(2);
+                        message = (value == 1) ? "heads" : "tails";
+                        return SendAnswer(req, message);
+
+                    case "RollADice":
+                        value = rnd.Next(1, 6);
+                        message = value.ToString();
+                        return SendAnswer(req, message);
+
                     default:
-                        return SendAnswer(req, "That's not an intent");
+                        message = "This intent exists in the Alexa Intent Schema, but has not been implemented in your Azure function";
+                        return SendAnswer(req, message);
                 }
             }
 

@@ -1,7 +1,7 @@
 ﻿{
   "intents": [
     {
-      "intent": "Random",
+      "intent": "Random", 
       "slots": [
         {
           "name": "FirstNumber",
@@ -12,6 +12,12 @@
           "type": "AMAZON.NUMBER"
         }
       ]
-    }    
+    },
+    {
+      "intent": "FlipACoin"
+    }, 
+    {
+      "intent": "RollADice"
+     }    
   ]
 }
