@@ -13,12 +13,12 @@ namespace SampleSkillFunction
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
             dynamic data = await req.Content.ReadAsAsync<object>();
+            string message = "";
 
             if (data.request.type == "IntentRequest")
             {
                 string intent = data.request.intent.name;
                 System.Random rnd = new System.Random();
-                string message;
                 int value = 0;
 
                 switch (intent)
@@ -40,33 +40,36 @@ namespace SampleSkillFunction
                             message = value.ToString();
                         }
 
-                        return SendAnswer(req, message);
+                        break;
 
                     case "FlipACoin":
                         value = rnd.Next(2);
                         message = (value == 1) ? "heads" : "tails";
-                        return SendAnswer(req, message);
+                        break;
 
                     case "RollADice":
                         value = rnd.Next(1, 6);
                         message = value.ToString();
-                        return SendAnswer(req, message);
+                        break;
 
                     default:
                         message = "This intent exists in the Alexa Intent Schema, but has not been implemented in your Azure function";
-                        return SendAnswer(req, message);
+                        break;
                 }
+                return SendAnswer(req, message);
             }
 
             else if (data) //data.request.type == "LaunchRequest" || "SessionEndedRequest"
             {
-                return SendAnswer(req, "No intent was called");
+                message = "No intent was called";
             }
 
             else
             {
-                return SendAnswer(req, "Something went wrong, no data received");
+                message = "Something went wrong, no data received";
             }
+
+            return SendAnswer(req, message);
         }
 
         private static HttpResponseMessage SendAnswer(HttpRequestMessage req, string message)
